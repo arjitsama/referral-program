@@ -1,6 +1,6 @@
 ## Data Engineer Project
 ------------------------------------------------------------------------------------------------------------------------
-This project contains an ETL pipeline for fraud detection using PySpark and pandas.
+This project contains an ETL pipeline for fraud detection using Python and pandas.
 
 ## 📁 Structure
 - `etl_pipeline.py`: Main ETL script
