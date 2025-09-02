@@ -55,8 +55,6 @@ if __name__ == "__main__":
         .merge(paid_transactions, on="transaction_id", how="left")
         .merge(lead_logs, left_on="referee_id", right_on="lead_id", how="left", suffixes=("", "_lead"))
     )
-
-    # Derive referral_source_category
     df["referral_source_category"] = df["referral_source"].map({
         "User Sign Up": "Online",
         "Draft Transaction": "Offline",
@@ -64,7 +62,7 @@ if __name__ == "__main__":
     })
     df.loc[df["referral_source"] == "Lead", "referral_source_category"] = df["source_category"]
 
-    # Business Logic (fraud detection)
+    # Basic business logic implementation to detect fraud
     df["reward_value"] = pd.to_numeric(df["reward_value"], errors="coerce").fillna(0)
 
     conditions_valid = (
@@ -81,7 +79,7 @@ if __name__ == "__main__":
 
     df["is_business_logic_valid"] = conditions_valid | conditions_pending_failed
 
-    # Output Final Report
+    # Output
     report = df[[
         "referral_id", "referral_source", "referral_source_category", "referral_at",
         "referrer_id", "name", "phone_number", "transaction_id", "transaction_status",
@@ -91,5 +89,5 @@ if __name__ == "__main__":
     os.makedirs("output", exist_ok=True)
     report.to_csv(output_path, index=False)
 
-    print(f"✅ Final report saved to {output_path}")
-    print(f"✅ Profiling report saved to {profiling_path}")
+    print(f"Final report saved to {output_path}")
+    print(f"Profiling report saved to {profiling_path}")
