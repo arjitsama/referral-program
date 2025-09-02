@@ -26,4 +26,4 @@ python etl_pipeline.py
 ```
 
 ## Author
-Your Name
+Arjit Sama
